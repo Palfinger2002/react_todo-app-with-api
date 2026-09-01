@@ -1,20 +1,38 @@
 import { Todo } from '../types/Todo';
-import { client } from '../utils/fetchClient';
+import { axiosClient } from '../utils/axiosCilent';
 
 export const USER_ID = 4239;
 
 export const getTodos = () => {
-  return client.get<Todo[]>(`/todos?userId=${USER_ID}`);
+  return axiosClient
+    .get<Todo[]>(`/todos?userId=${USER_ID}`)
+    .then(response => response.data);
+};
+
+export const updateAll = (items: Todo[]): Promise<Todo[]> => {
+  return axiosClient
+    .patch('/todos?action=delete', { items })
+    .then(response => response.data);
 };
 
 export const addTodo = (newTodo: Omit<Todo, 'id' | 'userId'>) => {
-  return client.post<Todo>('/todos', { ...newTodo, userId: USER_ID });
+  return axiosClient
+    .post('/todos', { ...newTodo, userId: USER_ID })
+    .then(response => response.data);
 };
 
 export const deleteTodo = (todoId: number) => {
-  return client.delete(`/todos/${todoId}`);
+  return axiosClient.delete(`/todos/${todoId}`);
 };
 
 export const updateTodo = (todo: Partial<Todo> & { id: number }) => {
-  return client.patch<Todo>(`/todos/${todo.id}`, todo);
+  return axiosClient
+    .patch(`/todos/${todo.id}`, todo)
+    .then(response => response.data);
+};
+
+export const clearCompleted = (ids: number[]) => {
+  return axiosClient
+    .patch<Todo[]>('/todos?action=delete', { ids })
+    .then(response => response.data);
 };
