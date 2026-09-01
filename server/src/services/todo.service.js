@@ -5,6 +5,11 @@ const { DataTypes, DATE } = require('sequelize');
 const Todo = sequelize.define(
   'Todo',
   {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -51,19 +56,12 @@ const getById = async id => {
 };
 
 const create = async ({ title, userId }) => {
-  try {
-    const todo = await Todo.create({
-      id: uuidv4(),
-      userId: userId || 4239,
-      title,
-      completed: false,
-    });
-    return todo;
-  } catch (error) {
-    console.error('Real error message', error.message);
-    console.error('id was:', uuidv4());
-    throw error;
-  }
+  const todo = await Todo.create({
+    userId: userId || 4239,
+    title,
+    completed: false,
+  });
+  return todo;
 };
 
 const update = async (id, changes) => {
