@@ -1,6 +1,6 @@
 # React Todo App with API
 
-A full-stack Todo application built as part of the Mate Academy curriculum, extended with a custom backend, database, and full deployment pipeline.
+A full-stack Todo application with a custom Node.js/Express backend, PostgreSQL database, and full deployment pipeline.
 
 > 🔗 **Live demo:** https://react-todo-app-with-api-fu5w.vercel.app
 > 🔗 **API example:** https://react-todo-app-with-api.onrender.com/todos
